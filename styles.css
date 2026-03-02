@@ -1,0 +1,1048 @@
+/* =========================================
+   1. RESET & VARIABLES
+   ========================================= */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f9f9;
+    --text-primary: #0f0f0f;
+    --text-secondary: #606060;
+    --border-color: #e5e5e5;
+    --hover-bg: #f2f2f2;
+    --accent-color: #ff0000;
+    --header-height: 56px;
+    --sidebar-width: 240px;
+    --sidebar-collapsed-width: 72px;
+    
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', Arial, sans-serif;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* =========================================
+   2. STATE MANAGEMENT (CHECKBOX HACKS)
+   ========================================= */
+.state-checkbox {
+    display: none; /* Hide the checkboxes */
+}
+
+/* DARK MODE LOGIC */
+#theme-toggle:checked ~ .app-container {
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1e1e1e; /* Slightly lighter for cards/sidebar in dark mode */
+    --text-primary: #f1f1f1;
+    --text-secondary: #aaaaaa;
+    --border-color: #303030;
+    --hover-bg: #272727;
+}
+
+/* =========================================
+   3. HEADER
+   ========================================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+    padding: 0 16px;
+    background-color: var(--bg-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-primary);
+    gap: 4px;
+}
+
+.logo-icon {
+    height: 24px;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    flex: 0 1 732px; /* Max width */
+    gap: 8px;
+}
+
+.search-bar {
+    display: flex;
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 40px;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+    margin-left: 40px;
+}
+
+.search-bar input {
+    flex: 1;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: transparent;
+    color: var(--text-primary);
+    outline: none;
+}
+
+.search-btn {
+    background-color: var(--bg-secondary);
+    border: none;
+    border-left: 1px solid var(--border-color);
+    width: 64px;
+    cursor: pointer;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-btn img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* =========================================
+   4. SIDEBAR (RESPONSIVE & COLLAPSIBLE)
+   ========================================= */
+.sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background-color: var(--bg-primary);
+    overflow-y: auto;
+    transition: width 0.2s;
+    z-index: 90;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.sidebar:hover {
+    overflow-y: auto; /* Show scrollbar on hover */
+}
+
+.sidebar-inner {
+    padding: 12px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    height: 40px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+    background-color: var(--hover-bg);
+}
+
+.sidebar-item.active {
+    font-weight: 500;
+}
+
+.sidebar-item .material-icons {
+    margin-right: 24px;
+    font-size: 24px;
+    color: var(--text-primary);
+}
+
+.sidebar-item span {
+    font-size: 14px;
+}
+
+.sub-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 24px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 12px 0;
+}
+
+.sidebar-title {
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* SIDEBAR COLLAPSE LOGIC via Checkbox Hack */
+/* Default: Expanded. When Unchecked -> Collapsed (Tablet style) */
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar {
+    width: var(--sidebar-collapsed-width);
+}
+
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item span:not(.material-icons),
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-title,
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .divider {
+    display: none;
+}
+
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item {
+    justify-content: center;
+    padding: 0;
+    flex-direction: column;
+    height: 72px;
+    margin-bottom: 0;
+}
+
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item .material-icons {
+    margin-right: 0;
+    margin-bottom: 6px;
+}
+
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item span {
+    display: block; /* Show text for mini sidebar if needed, usually hidden but here we might want tiny text */
+    font-size: 10px;
+}
+/* Specifically hide non-icon text for simplicity in collapsed mode if strict icon-only is desired */
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item span {
+    display: none;
+}
+/* But let's follow the typical YT tablet rail which has icons + tiny text. Let's stick to icons only for simplicity or standard mini-rail. */
+/* Re-enabling tiny text for mini-rail */
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item {
+    padding-top: 16px;
+}
+#sidebar-toggle:not(:checked) ~ .app-container .sidebar .sidebar-item span:last-child {
+    display: block;
+    font-size: 10px;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   5. MAIN CONTENT & GRID
+   ========================================= */
+.main-layout {
+    margin-top: var(--header-height);
+    margin-left: var(--sidebar-width); /* Default expanded */
+    transition: margin-left 0.2s;
+}
+
+#sidebar-toggle:not(:checked) ~ .app-container .main-layout {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+.content {
+    padding: 24px;
+}
+
+/* Category Pills */
+.categories-wrapper {
+    position: sticky;
+    top: var(--header-height);
+    background-color: var(--bg-primary);
+    z-index: 80;
+    padding: 12px 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.categories {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px; /* Hide scrollbar visually */
+    scrollbar-width: none; /* Firefox */
+}
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+.pill {
+    padding: 6px 12px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color); /* Light border for contrast */
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.pill.active {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    border-color: transparent;
+}
+
+.pill:hover:not(.active) {
+    background-color: var(--border-color);
+}
+
+/* Video Grid */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Desktop: 4 cols */
+    gap: 20px 16px;
+}
+
+.video-card {
+    cursor: pointer;
+    position: relative; /* Context for hover effects */
+    perspective: 1000px; /* For 3D Tilt */
+}
+
+.thumbnail-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s;
+}
+
+.duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.video-info {
+    display: flex;
+    margin-top: 12px;
+    gap: 12px;
+}
+
+.channel-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.video-text {
+    flex: 1;
+}
+
+.video-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--text-primary);
+}
+
+.channel-name, .video-meta {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.more-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.video-card:hover .more-btn {
+    opacity: 1;
+}
+
+/* =========================================
+   6. CUSTOM FEATURE 1: DARK MODE TOGGLE (Theme Switch Styling)
+   ========================================= */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    transition: background-color 0.4s;
+}
+
+.theme-switch .material-icons {
+    font-size: 18px;
+    color: white;
+    z-index: 1;
+}
+
+/* The knob */
+.theme-switch::after {
+    content: '';
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+    z-index: 2;
+}
+
+/* Checked state (Dark Mode) */
+#theme-toggle:checked ~ .app-container .theme-switch {
+    background-color: #2196F3;
+}
+
+#theme-toggle:checked ~ .app-container .theme-switch::after {
+    transform: translateX(22px);
+}
+
+/* Hide Sun/Moon appropriately or just use them as background icons */
+.sun { opacity: 0; transition: opacity 0.3s; }
+.moon { opacity: 1; transition: opacity 0.3s; }
+
+#theme-toggle:checked ~ .app-container .sun { opacity: 1; }
+#theme-toggle:checked ~ .app-container .moon { opacity: 0; }
+
+
+/* =========================================
+   7. CUSTOM FEATURE 2: HOVER VIDEO PREVIEW
+   ========================================= */
+.hover-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none; /* Let clicks pass through */
+}
+
+.now-playing {
+    color: white;
+    font-weight: bold;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+}
+
+.preview-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: red;
+    width: 0%;
+    /* Animation definition */
+    animation: loadProgress 3s linear;
+    animation-play-state: paused;
+}
+
+@keyframes loadProgress {
+    to { width: 100%; }
+}
+
+.preview-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.9);
+    padding: 12px;
+    color: white;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preview-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.preview-meta {
+    font-size: 12px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Hover Interactions */
+.video-card:hover {
+    z-index: 10; /* Bring to front */
+}
+
+/* Scale effect */
+.video-card:hover .thumbnail {
+    transform: scale(1.05);
+}
+
+/* Show preview overlay */
+.video-card:hover .hover-preview {
+    opacity: 1;
+}
+
+.video-card:hover .now-playing {
+    transform: translateY(0);
+}
+
+/* Play progress bar */
+.video-card:hover .preview-progress {
+    animation-play-state: running;
+}
+
+/* Slide up details */
+.video-card:hover .preview-details {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Bonus: 3D Tilt (Subtle) */
+.video-card:hover .thumbnail-container {
+    transform: rotateX(2deg) rotateY(2deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+/* =========================================
+   8. CUSTOM FEATURE 3: PLAYLIST SIDEBAR
+   ========================================= */
+.playlist-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    right: -360px; /* Hidden by default */
+    width: 360px;
+    bottom: 0;
+    background-color: var(--bg-primary);
+    border-left: 1px solid var(--border-color);
+    transition: right 0.3s ease;
+    z-index: 95;
+    padding: 20px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+}
+
+#playlist-toggle:checked ~ .app-container .playlist-sidebar {
+    right: 0;
+}
+
+.playlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-playlist {
+    cursor: pointer;
+}
+
+.playlist-items {
+    counter-reset: playlist-counter;
+}
+
+.playlist-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.playlist-item:hover {
+    background-color: var(--hover-bg);
+}
+
+.playlist-item::before {
+    counter-increment: playlist-counter;
+    content: counter(playlist-counter);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.playlist-item img {
+    width: 100px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.playlist-info h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.playlist-info p {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Mini Player Animation */
+.mini-player {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: var(--bg-secondary);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+}
+
+.bar {
+    width: 4px;
+    background-color: var(--accent-color);
+    animation: bounce 1s infinite;
+}
+
+.bar:nth-child(1) { animation-delay: 0.1s; height: 60%; }
+.bar:nth-child(2) { animation-delay: 0.3s; height: 100%; }
+.bar:nth-child(3) { animation-delay: 0.2s; height: 80%; }
+
+@keyframes bounce {
+    0%, 100% { height: 40%; }
+    50% { height: 100%; }
+}
+
+/* =========================================
+   9. CUSTOM FEATURE 4: LOGIN MODAL
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Show when targeted */
+#login-modal:target {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-close-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: default;
+}
+
+.modal-content {
+    background-color: white; /* Modal usually white even in dark mode for Google signin, but lets adapt */
+    width: 450px;
+    padding: 48px 40px 36px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 201;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    /* For dark mode consistency, we can use variables or keep it google-style white */
+}
+
+/* Keep Google style mostly white/clean */
+.modal-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.modal-header h2 {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 16px 0 8px;
+    color: #202124;
+}
+
+.modal-header p {
+    font-size: 16px;
+    color: #202124;
+}
+
+/* Tab Switching Logic */
+.auth-tab-input {
+    display: none;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #ddd;
+}
+
+.auth-tab-label {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #5f6368;
+    border-bottom: 2px solid transparent;
+}
+
+/* Active Tab Styles */
+#tab-signin:checked ~ .auth-tabs label[for="tab-signin"],
+#tab-signup:checked ~ .auth-tabs label[for="tab-signup"] {
+    color: #1a73e8;
+    border-bottom-color: #1a73e8;
+}
+
+.auth-forms {
+    position: relative;
+    height: 250px; /* Fixed height to prevent jumping */
+}
+
+.auth-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    transform: translateX(20px);
+}
+
+/* Show active form */
+#tab-signin:checked ~ .auth-forms .signin-form,
+#tab-signup:checked ~ .auth-forms .signup-form {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Input Floating Labels */
+.input-group {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: #1a73e8;
+    border-width: 2px;
+    padding: 12px 14px; /* Adjust for border width */
+}
+
+.form-label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    color: #5f6368;
+    font-size: 16px;
+    pointer-events: none;
+    background-color: white;
+    padding: 0 4px;
+    transition: 0.2s ease all;
+}
+
+/* Float label on focus or valid input (simulated with :valid for required fields) */
+.form-input:focus + .form-label,
+.form-input:valid + .form-label {
+    top: -10px;
+    font-size: 12px;
+    color: #1a73e8;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.btn-primary {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.link {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #5f6368;
+    text-decoration: none;
+}
+
+/* =========================================
+   10. RESPONSIVE QUERIES
+   ========================================= */
+
+/* Tablet (max-width: 1024px) */
+/* Grid: 4 cols -> 3 cols or 2 cols depending on space */
+@media (max-width: 1100px) {
+    .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Force collapsed sidebar on tablet if not already manually handled, 
+       but our checkbox hack defaults to manual control. 
+       We can force the checkbox to unchecked state visually if we wanted pure CSS media query overrides,
+       but the prompt asks for "Collapsed sidebar (72px icons only)" on Tablet.
+       
+       Since we can't change the checkbox state with CSS, we use Media Queries to override the styles 
+       regardless of the checkbox state for the "Default" view on smaller screens.
+    */
+    
+    /* Hide the full sidebar text regardless of toggle on smaller screens, unless we want to allow expansion.
+       Usually, tablet is strictly collapsed.
+    */
+    .sidebar {
+        width: var(--sidebar-collapsed-width);
+    }
+    .sidebar-item span:not(.material-icons), .sidebar-title, .divider {
+        display: none;
+    }
+    .sidebar-item {
+        justify-content: center;
+        flex-direction: column;
+        height: 72px;
+        padding-top: 16px;
+    }
+    .sidebar-item span:last-child {
+        display: block;
+        font-size: 10px;
+    }
+    .sidebar-item .material-icons {
+        margin-right: 0;
+        margin-bottom: 6px;
+    }
+    
+    .main-layout {
+        margin-left: var(--sidebar-collapsed-width);
+    }
+}
+
+/* Mobile (max-width: 600px) */
+@media (max-width: 600px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Hidden Sidebar */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 240px; /* Full width drawer when opened */
+    }
+    
+    /* If we want a bottom nav, we'd need extra HTML for that or transform the sidebar.
+       Prompt says: "Mobile: Hidden sidebar (hamburger menu), 1-column grid, bottom navigation"
+       
+       Let's implement Bottom Nav just for mobile and hide sidebar.
+    */
+    .sidebar {
+        display: none; /* Hide standard sidebar */
+    }
+    
+    .main-layout {
+        margin-left: 0;
+        margin-bottom: 60px; /* Space for bottom nav */
+    }
+    
+    /* Bottom Nav (We need to add this to HTML or repurpose sidebar items? 
+       Adding a mobile-only bottom nav to HTML is cleaner.
+    */
+    
+    .search-bar {
+        display: none; /* Hide search on mobile to save space, maybe just icon */
+    }
+    
+    .header-center {
+        justify-content: flex-end;
+    }
+}
+
+/* We need to add Bottom Nav to HTML for Mobile */
+
+/* =========================================
+   11. MOBILE BOTTOM NAV
+   ========================================= */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 10px;
+    flex: 1;
+}
+
+.nav-item .material-icons {
+    font-size: 24px;
+    margin-bottom: 2px;
+}
+
+.nav-item.active {
+    color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+    .mobile-nav {
+        display: flex;
+    }
+}

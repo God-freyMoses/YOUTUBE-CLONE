@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Clone - Pure CSS</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Using Google Fonts for icons to keep it lightweight or simple SVGs -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- STATE MANAGEMENT CHECKBOXES (THE "HACKS") -->
+    <!-- Dark Mode Toggle -->
+    <input type="checkbox" id="theme-toggle" class="state-checkbox">
+    
+    <!-- Sidebar Toggle -->
+    <input type="checkbox" id="sidebar-toggle" class="state-checkbox" checked>
+    
+    <!-- Playlist Sidebar Toggle -->
+    <input type="checkbox" id="playlist-toggle" class="state-checkbox">
+
+    <!-- Login Modal Target handled by :target, but we can use a checkbox for internal tab switching -->
+    
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <label for="sidebar-toggle" class="icon-btn">
+                    <span class="material-icons">menu</span>
+                </label>
+                <a href="#" class="logo">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIiBmaWxsPSIjRkYwMDAwIj48cGF0aCBkPSJNNTQ5LjY1NSAxMjQuMDgzYzAtMjAuMTAxLTE2LjM1LTMyLjczNC0zNi40NS0zMi43MzRINjIuNzk1Yy0yMC4xMDEgMC0zNi40NSAxMi42MzMtMzYuNDUgMzIuNzM0djI2My44MzRjMCAyMC4xMDEgMTYuMzUgMzIuNzM0IDM2LjQ1IDMyLjczNGg0NTAuNDFjMjAuMTAxIDAgMzYuNDUtMTIuNjMzIDM2LjQ1LTMyLjczNFYxMjQuMDgzem0tMzYyLjQ1IDE4Ni42MzRWMTU3LjY4bDE1NS43NyA3Ni41MTctMTU1Ljc3IDc2LjUyeiIvPjwvc3ZnPg==" alt="YouTube Logo" class="logo-icon">
+                    <span class="logo-text">YouTube</span>
+                </a>
+            </div>
+            
+            <div class="header-center">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search">
+                    <button class="search-btn">
+                        <span class="material-icons">search</span>
+                    </button>
+                </div>
+                <button class="mic-btn icon-btn">
+                    <span class="material-icons">mic</span>
+                </button>
+            </div>
+            
+            <div class="header-right">
+                <!-- Dark Mode Toggle Switch -->
+                <div class="theme-switch-wrapper">
+                    <label for="theme-toggle" class="theme-switch">
+                        <span class="material-icons sun">light_mode</span>
+                        <span class="material-icons moon">dark_mode</span>
+                    </label>
+                </div>
+
+                <label for="playlist-toggle" class="icon-btn" title="Playlist">
+                    <span class="material-icons">playlist_play</span>
+                </label>
+                
+                <button class="icon-btn">
+                    <span class="material-icons">notifications</span>
+                </button>
+                
+                <a href="#login-modal" class="profile-btn">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <div class="main-layout">
+            
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-inner">
+                    <a href="#" class="sidebar-item active">
+                        <span class="material-icons">home</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">explore</span>
+                        <span>Shorts</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">subscriptions</span>
+                        <span>Subscriptions</span>
+                    </a>
+                    <hr class="divider">
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">video_library</span>
+                        <span>Library</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">history</span>
+                        <span>History</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">smart_display</span>
+                        <span>Your Videos</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <span class="material-icons">watch_later</span>
+                        <span>Watch Later</span>
+                    </a>
+                    <hr class="divider">
+                    <h3 class="sidebar-title">Subscriptions</h3>
+                    <a href="#" class="sidebar-item">
+                        <img src="https://ui-avatars.com/api/?name=C1&background=random" class="sub-avatar" alt="">
+                        <span>Channel 1</span>
+                    </a>
+                    <a href="#" class="sidebar-item">
+                        <img src="https://ui-avatars.com/api/?name=C2&background=random" class="sub-avatar" alt="">
+                        <span>Channel 2</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- CONTENT AREA -->
+            <main class="content">
+                
+                <!-- CATEGORY PILLS -->
+                <div class="categories-wrapper">
+                    <div class="categories">
+                        <button class="pill active">All</button>
+                        <button class="pill">Gaming</button>
+                        <button class="pill">Music</button>
+                        <button class="pill">Live</button>
+                        <button class="pill">Computers</button>
+                        <button class="pill">Programming</button>
+                        <button class="pill">Podcasts</button>
+                        <button class="pill">News</button>
+                        <button class="pill">Sports</button>
+                        <button class="pill">Learning</button>
+                        <button class="pill">Fashion</button>
+                    </div>
+                </div>
+
+                <!-- VIDEO GRID -->
+                <div class="video-grid">
+                    <!-- Video Card 1 -->
+                    <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/1/320/180');"></div>
+                            <span class="duration">12:45</span>
+                            <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                            <div class="preview-details">
+                                <p class="preview-title">Building a YouTube Clone with Pure CSS</p>
+                                <div class="preview-meta">
+                                    <span>85% Match</span>
+                                    <span>2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Dev&background=0D8ABC&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">Building a YouTube Clone with Pure CSS | No JS Challenge</h3>
+                                <p class="channel-name">DevMaster</p>
+                                <p class="video-meta">1.2M views • 2 days ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 2 -->
+                    <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/2/320/180');"></div>
+                            <span class="duration">8:20</span>
+                            <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                             <div class="preview-details">
+                                <p class="preview-title">CSS Grid vs Flexbox</p>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=CSS&background=ff0000&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">CSS Grid vs Flexbox: When to use which?</h3>
+                                <p class="channel-name">CSS Tricks</p>
+                                <p class="video-meta">500K views • 1 week ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 3 -->
+                    <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/3/320/180');"></div>
+                            <span class="duration">15:00</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Gamer&background=purple&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">Top 10 Games of 2024</h3>
+                                <p class="channel-name">GamerPro</p>
+                                <p class="video-meta">2.5M views • 3 days ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 4 -->
+                    <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/4/320/180');"></div>
+                            <span class="duration">5:30</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Music&background=orange&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">Lofi Hip Hop Radio - Beats to Relax/Study to</h3>
+                                <p class="channel-name">Lofi Girl</p>
+                                <p class="video-meta">10M views • Live</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+
+                     <!-- Video Card 5 -->
+                     <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/5/320/180');"></div>
+                            <span class="duration">22:15</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Tech&background=blue&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">The Future of AI in 2025</h3>
+                                <p class="channel-name">TechDaily</p>
+                                <p class="video-meta">300K views • 5 hours ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+
+                     <!-- Video Card 6 -->
+                     <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/6/320/180');"></div>
+                            <span class="duration">10:10</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Nature&background=green&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">Amazing Nature Documentary 4K</h3>
+                                <p class="channel-name">Earth Planet</p>
+                                <p class="video-meta">5M views • 1 year ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+                     <!-- Video Card 7 -->
+                     <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/7/320/180');"></div>
+                            <span class="duration">4:20</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Food&background=pink&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">How to Cook the Perfect Steak</h3>
+                                <p class="channel-name">Chef Gordon</p>
+                                <p class="video-meta">800K views • 2 months ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+                     <!-- Video Card 8 -->
+                     <div class="video-card">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" style="background-image: url('https://picsum.photos/seed/8/320/180');"></div>
+                            <span class="duration">18:45</span>
+                             <div class="hover-preview">
+                                <span class="now-playing">Keep hovering to play</span>
+                                <div class="preview-progress"></div>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <img src="https://ui-avatars.com/api/?name=Car&background=black&color=fff" class="channel-avatar" alt="">
+                            <div class="video-text">
+                                <h3 class="video-title">2025 Supercar Review</h3>
+                                <p class="channel-name">AutoMobile</p>
+                                <p class="video-meta">200K views • 3 days ago</p>
+                            </div>
+                            <button class="more-btn"><span class="material-icons">more_vert</span></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- PLAYLIST SIDEBAR -->
+        <aside class="playlist-sidebar">
+            <div class="playlist-header">
+                <h2>Current Playlist</h2>
+                <label for="playlist-toggle" class="close-playlist"><span class="material-icons">close</span></label>
+            </div>
+            <div class="playlist-items">
+                <div class="playlist-item">
+                    <img src="https://picsum.photos/seed/1/120/68" alt="thumb">
+                    <div class="playlist-info">
+                        <h4>Building a YouTube Clone</h4>
+                        <p>DevMaster</p>
+                    </div>
+                </div>
+                <div class="playlist-item">
+                    <img src="https://picsum.photos/seed/2/120/68" alt="thumb">
+                    <div class="playlist-info">
+                        <h4>CSS Grid vs Flexbox</h4>
+                        <p>CSS Tricks</p>
+                    </div>
+                </div>
+                <div class="playlist-item">
+                    <img src="https://picsum.photos/seed/3/120/68" alt="thumb">
+                    <div class="playlist-info">
+                        <h4>Top 10 Games</h4>
+                        <p>GamerPro</p>
+                    </div>
+                </div>
+                <div class="playlist-item">
+                    <img src="https://picsum.photos/seed/4/120/68" alt="thumb">
+                    <div class="playlist-info">
+                        <h4>Lofi Hip Hop Radio</h4>
+                        <p>Lofi Girl</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Bonus: Mini Player Simulation -->
+            <div class="mini-player">
+                <div class="equalizer">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <span>Playing: Lofi Hip Hop</span>
+            </div>
+        </aside>
+
+        <!-- LOGIN MODAL (Target-based) -->
+        <div id="login-modal" class="modal-overlay">
+            <a href="#" class="modal-close-area"></a>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg" alt="Google">
+                    <h2>Sign in</h2>
+                    <p>to continue to YouTube</p>
+                </div>
+                
+                <!-- Tab Switching using Radio Buttons -->
+                <input type="radio" name="auth-tab" id="tab-signin" class="auth-tab-input" checked>
+                <input type="radio" name="auth-tab" id="tab-signup" class="auth-tab-input">
+                
+                <div class="auth-tabs">
+                    <label for="tab-signin" class="auth-tab-label">Sign In</label>
+                    <label for="tab-signup" class="auth-tab-label">Create Account</label>
+                </div>
+
+                <div class="auth-forms">
+                    <!-- Sign In Form -->
+                    <form class="auth-form signin-form">
+                        <div class="input-group">
+                            <input type="email" id="si-email" class="form-input" required>
+                            <label for="si-email" class="form-label">Email or phone</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="si-password" class="form-input" required>
+                            <label for="si-password" class="form-label">Password</label>
+                        </div>
+                        <div class="form-actions">
+                            <a href="#" class="link">Forgot email?</a>
+                        </div>
+                        <div class="form-footer">
+                            <a href="#" class="link">Create account</a>
+                            <button type="submit" class="btn-primary">Next</button>
+                        </div>
+                    </form>
+
+                    <!-- Sign Up Form -->
+                    <form class="auth-form signup-form">
+                        <div class="input-group">
+                            <input type="text" id="su-name" class="form-input" required>
+                            <label for="su-name" class="form-label">Full Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="su-email" class="form-input" required>
+                            <label for="su-email" class="form-label">Email address</label>
+                        </div>
+                         <div class="input-group">
+                            <input type="password" id="su-password" class="form-input" required>
+                            <label for="su-password" class="form-label">Password</label>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+                <a href="#" class="close-btn"><span class="material-icons">close</span></a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-nav">
+        <a href="#" class="nav-item active">
+            <span class="material-icons">home</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">explore</span>
+            <span>Shorts</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">add_circle_outline</span>
+            <span>Create</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">subscriptions</span>
+            <span>Subs</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">library_music</span>
+            <span>You</span>
+        </a>
+    </nav>
+
+</body>
+</html>
